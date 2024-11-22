@@ -1,0 +1,6 @@
+.bgheader{
+    height: 400px;
+    width: 100%;
+    color:white;
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.8)), url(../../../public/images/header.jpg);
+}
