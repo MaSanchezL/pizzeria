@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import CardPizza from "./CardPizza";
 import { pizzas } from "../assets/js/pizzaData";
 
-const Home = () => {
+const Home = ({ addToCart }) => {
   return (
     <Container className="py-4">
       {Array.from({ length: Math.ceil(pizzas.length / 3) }).map((_, rowIndex) => (
@@ -17,6 +17,8 @@ const Home = () => {
                   nombre={pizza.nombre}
                   ingredientes={pizza.ingredientes}
                   precio={pizza.precio}
+                  id={pizza.id}
+                  addToCart={addToCart}
                 />
               </Col>
             ))}

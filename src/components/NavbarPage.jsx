@@ -1,30 +1,53 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { Button } from "react-bootstrap";
-const NavbarPage = () => {
- 
-const total = 25000;
-const token = false 
- return (
-    <>
-      <Navbar expand="lg" bg="dark" data-bs-theme="dark">
-        <Container fluid>
-        <Navbar.Brand href="#home" >Pizzería Mamma Mia!</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
-          <Navbar.Collapse id="navbarScroll">
-          <Nav className="me-auto">
-            <Button variant="dark">🍕Home</Button>
-            <Button variant="dark">🔒Login</Button>
-            <Button variant="dark">🔑Register</Button>
-            </Nav>
+import { Navbar, Nav, Container, Badge } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-              <Button variant="outline-info">🛒Total: ${total}</Button>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-    </>
+const NavbarPage = ({ token, setToken, cart }) => {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+  return (
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <Navbar.Brand as={Link} to="/">
+          Pizzería Mamma Mia
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/">
+              Inicio
+            </Nav.Link>
+          </Nav>
+          <Nav>
+            {token ? (
+              <>
+                <Nav.Link as={Link} to="/profile">
+                  Profile
+                </Nav.Link>
+                <Nav.Link onClick={() => setToken(false)}>Logout</Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link as={Link} to="/login">
+                  Login
+                </Nav.Link>
+                <Nav.Link as={Link} to="/register">
+                  Register
+                </Nav.Link>
+              </>
+            )}
+            <Nav.Link as={Link} to="/cart">
+              🛒 Carrito{" "}
+              {totalItems > 0 && (
+                <Badge bg="secondary" pill>
+                  {totalItems}
+                </Badge>
+              )}
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 };
 

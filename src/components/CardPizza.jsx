@@ -19,14 +19,23 @@ const CardPizza = (props) => {
         </Card.Text>
         <hr />
         <Card.Text className="text-center">
-          {" "}
           Precio <strong>${props.precio} </strong>
         </Card.Text>
         <div className="d-flex justify-content-between">
           <Button variant="outline-dark" size="sm">
             Ver Más 👀
           </Button>
-          <Button variant="dark" size="sm">
+          <Button
+            variant="dark"
+            size="sm"
+            onClick={() =>
+              props.addToCart({
+                id: props.id,
+                name: props.nombre,
+                price: props.precio,
+              })
+            }
+          >
             Añadir 🛒
           </Button>
         </div>
