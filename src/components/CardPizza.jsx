@@ -2,24 +2,35 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 
 const CardPizza = (props) => {
+  console.log(props);
+  let showDescription = props.showDescription;
+  props = props.data;
   return (
-    <Card style={{ width: "18rem" }} className="my-4">
+    <Card className="my-4">
       <Card.Img
         variant="top"
         src={props.img}
-        alt={props.nombre}
+        alt={props.name}
         style={{ width: "100%", height: "150px", objectFit: "cover" }}
       />
       <Card.Body>
-        <Card.Title>{props.nombre}</Card.Title>
+        <Card.Title>{props.name}</Card.Title>
         <hr />
+
+        {showDescription && (
+          <>
+            <Card.Text className="text-center">{props.desc}</Card.Text>
+            <hr />
+          </>
+        )}
+
         <Card.Text className="text-center">
           Ingredientes <br />
-          🍕{props.ingredientes}
+          🍕{props?.ingredients?.join(", ")}
         </Card.Text>
         <hr />
         <Card.Text className="text-center">
-          Precio <strong>${props.precio} </strong>
+          Precio <strong>${props.price} </strong>
         </Card.Text>
         <div className="d-flex justify-content-between">
           <Button variant="outline-dark" size="sm">
@@ -31,8 +42,8 @@ const CardPizza = (props) => {
             onClick={() =>
               props.addToCart({
                 id: props.id,
-                name: props.nombre,
-                price: props.precio,
+                name: props.name,
+                price: props.price,
               })
             }
           >

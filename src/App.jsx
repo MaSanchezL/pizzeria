@@ -8,6 +8,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Cart from "./components/Cart";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Pizza from "./components/Pizza";
 
 function App() {
   const [token, setToken] = useState(false);
@@ -56,6 +57,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home addToCart={addToCart} />} />
+        <Route path="/pizza" element={<Pizza />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login setToken={setToken} />} />
         <Route
