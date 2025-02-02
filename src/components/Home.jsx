@@ -1,19 +1,50 @@
 import React, { useState, useEffect } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row, Spinner, Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import CardPizza from "./CardPizza";
 
 const Home = ({ addToCart }) => {
   const url = "http://localhost:5000/api/pizzas";
   const [pizzas, setPizzas] = useState([]);
-  const getData = async () => {
-    const response = await fetch(url);
-    const data = await response.json();
-    setPizzas(data);
-  };
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("No se pudieron cargar las pizzas");
+
+        const data = await response.json();
+        setPizzas(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     getData();
   }, []);
+
+  if (loading) {
+    return (
+      <Container className="py-4 text-center">
+        <Spinner animation="border" variant="primary" /> Cargando pizzas...
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="py-4">
+        <Alert variant="danger">
+          <strong>Error:</strong> {error}
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-4">
@@ -21,12 +52,13 @@ const Home = ({ addToCart }) => {
         <Row className="justify-content-center" key={rowIndex}>
           {pizzas
             .slice(rowIndex * 3, rowIndex * 3 + 3)
-            .map((pizza, i) => (
-              <Col key={i}>
+            .map((pizza) => (
+              <Col key={pizza.id}>
                 <CardPizza
                   data={pizza}
-                  showDescription = {false}
+                  showDescription={false}
                   addToCart={addToCart}
+                  onClick={() => navigate(`/pizza-detail/${pizza.id}`)} // ✅ Navegamos con el ID
                 />
               </Col>
             ))}
