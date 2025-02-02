@@ -3,10 +3,13 @@ import { Container, Table, Button } from "react-bootstrap";
 import { useCartContext } from "../context/CartContext"; // Usamos el contexto
 
 const Cart = () => {
-  const { cart, removeFromCart, incrementQuantity, decrementQuantity, addToCart } = useCartContext(); // Obtenemos todo desde el contexto
-
-  const calculateTotal = () =>
-    cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const {
+    cart,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    calculateTotal, // Obtenemos la función calculateTotal desde el contexto
+  } = useCartContext(); // Obtenemos todo desde el contexto
 
   return (
     <Container className="py-4">
@@ -52,7 +55,6 @@ const Cart = () => {
                     >
                       Eliminar
                     </Button>{" "}
-                   
                   </td>
                 </tr>
               ))}

@@ -20,7 +20,6 @@ function App() {
         <Router>
           <NavbarPage />
           <Header />
-          <CartProvider>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pizza-detail/:id" element={<PizzaDetail />} />
@@ -30,7 +29,6 @@ function App() {
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/404" element={<NotFound />} />
           </Routes>
-          </CartProvider>
           <Footer />
         </Router>
       </CartProvider>

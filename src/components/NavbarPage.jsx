@@ -6,9 +6,10 @@ import { useCartContext } from "../context/CartContext";
 const NavbarPage = () => {
   const { cart } = useCartContext();
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
       <Container>
         <Navbar.Brand as={Link} to="/">
           Pizzería Mamma Mia
@@ -22,7 +23,7 @@ const NavbarPage = () => {
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/cart">
-              🛒 Carrito{" "}
+              🛒 {totalItems > 0 ? `Carrito: $${totalAmount.toFixed(2)}` : 'Carrito vacío'} 
               {totalItems > 0 && (
                 <Badge bg="secondary" pill>
                   {totalItems}
