@@ -20,15 +20,17 @@ function App() {
         <Router>
           <NavbarPage />
           <Header />
+          <CartProvider>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/pizza-detail/:id" element={<PizzaDetail />} /> {/* ✅ Ahora funciona correctamente */}
+            <Route path="/pizza-detail/:id" element={<PizzaDetail />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="*" element={<Navigate to="/404" />} />
             <Route path="/404" element={<NotFound />} />
           </Routes>
+          </CartProvider>
           <Footer />
         </Router>
       </CartProvider>

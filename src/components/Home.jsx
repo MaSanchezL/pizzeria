@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Col, Container, Row, Spinner, Alert } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import CardPizza from "./CardPizza";
+import { useCartContext } from "../context/CartContext"
 
-const Home = ({ addToCart }) => {
+const Home = ({}) => {
+  const { addToCart } = useCartContext();
   const url = "http://localhost:5000/api/pizzas";
   const [pizzas, setPizzas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +60,6 @@ const Home = ({ addToCart }) => {
                   data={pizza}
                   showDescription={false}
                   addToCart={addToCart}
-                  onClick={() => navigate(`/pizza-detail/${pizza.id}`)} // ✅ Navegamos con el ID
                 />
               </Col>
             ))}

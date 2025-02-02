@@ -1,7 +1,10 @@
 import React from "react";
 import { Container, Table, Button } from "react-bootstrap";
+import { useCartContext } from "../context/CartContext"; // Usamos el contexto
 
-const Cart = ({ cart, removeFromCart, incrementQuantity, decrementQuantity }) => {
+const Cart = () => {
+  const { cart, removeFromCart, incrementQuantity, decrementQuantity, addToCart } = useCartContext(); // Obtenemos todo desde el contexto
+
   const calculateTotal = () =>
     cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
@@ -48,7 +51,8 @@ const Cart = ({ cart, removeFromCart, incrementQuantity, decrementQuantity }) =>
                       onClick={() => removeFromCart(item.id)}
                     >
                       Eliminar
-                    </Button>
+                    </Button>{" "}
+                   
                   </td>
                 </tr>
               ))}

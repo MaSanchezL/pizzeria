@@ -2,39 +2,38 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import { Link } from 'react-router-dom';
 
-const CardPizza = (props) => {
-  console.log(props);
-  let showDescription = props.showDescription;
-  props = props.data;
+const CardPizza = ({ data, showDescription, addToCart }) => {
+  const { id, img, name, desc, ingredients, price } = data;
+
   return (
     <Card className="my-4">
       <Card.Img
         variant="top"
-        src={props.img}
-        alt={props.name}
+        src={img}
+        alt={name}
         style={{ width: "100%", height: "150px", objectFit: "cover" }}
       />
       <Card.Body>
-        <Card.Title>{props.name}</Card.Title>
+        <Card.Title>{name}</Card.Title>
         <hr />
 
         {showDescription && (
           <>
-            <Card.Text className="text-center">{props.desc}</Card.Text>
+            <Card.Text className="text-center">{desc}</Card.Text>
             <hr />
           </>
         )}
 
         <Card.Text className="text-center">
           Ingredientes <br />
-          🍕{props?.ingredients?.join(", ")}
+          🍕{ingredients?.join(", ")}
         </Card.Text>
         <hr />
         <Card.Text className="text-center">
-          Precio <strong>${props.price} </strong>
+          Precio <strong>${price} </strong>
         </Card.Text>
         <div className="d-flex justify-content-between">
-        <Link to={`/pizza-detail/${props.id}`}>
+          <Link to={`/pizza-detail/${id}`}>
             <Button variant="outline-dark" size="sm">
               Ver Más 👀
             </Button>
@@ -43,10 +42,10 @@ const CardPizza = (props) => {
             variant="dark"
             size="sm"
             onClick={() =>
-              props.addToCart({
-                id: props.id,
-                name: props.name,
-                price: props.price,
+              addToCart({
+                id,
+                name,
+                price,
               })
             }
           >
