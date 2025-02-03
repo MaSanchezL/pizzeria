@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { UserProvider } from "./context/UserContext";
+import { UserProvider, useUserContext } from "./context/UserContext";
 import { CartProvider } from "./context/CartContext";
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -9,9 +9,26 @@ import NavbarPage from "./components/NavbarPage";
 import Register from "./components/Register";
 import Login from "./components/Login";
 import Cart from "./components/Cart";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Profile from "./components/Profile";
 import PizzaDetail from "./components/PizzaDetail";
 import NotFound from "./components/NotFound";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+function AppRoutes() {
+  const { token } = useUserContext();
+
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/pizza-detail/:id" element={<PizzaDetail />} />
+      <Route path="/register" element={!token ? <Register /> : <Navigate to="/" />} />
+      <Route path="/login" element={!token ? <Login /> : <Navigate to="/" />} />
+      <Route path="/cart" element={<Cart />} />
+      <Route path="/profile" element={token ? <Profile /> : <Navigate to="/login" />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
 
 function App() {
   return (
@@ -20,15 +37,7 @@ function App() {
         <Router>
           <NavbarPage />
           <Header />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/pizza-detail/:id" element={<PizzaDetail />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="*" element={<Navigate to="/404" />} />
-            <Route path="/404" element={<NotFound />} />
-          </Routes>
+          <AppRoutes />
           <Footer />
         </Router>
       </CartProvider>
